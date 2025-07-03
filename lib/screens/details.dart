@@ -1,41 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sleep_app/colors.dart';
+import 'package:sleep_app/model.dart';
+import 'package:sleep_app/screens/sleepStories.dart';
 
 class Details extends StatefulWidget {
-  const Details({super.key});
+  final SleepCard sleepCard;
+  const Details({super.key, required this.sleepCard});
 
   @override
   State<Details> createState() => _DetailsState();
 }
 
 class _DetailsState extends State<Details> {
-  final List<Map<String, dynamic>> sleepMusics = [
-    {
-      'image': 'assets/png/1.png',
-      'title': "Night Island",
-      'desc': '45 MIN • SLEEP MUSIC',
-    },
-    {
-      'image': 'assets/png/2.png',
-      'title': "Reduce Stress",
-      'desc': '45 MIN • SLEEP MUSIC',
-    },
-    {
-      'image': 'assets/png/3.png',
-      'title': "Calm Night",
-      'desc': '45 MIN • SLEEP MUSIC',
-    },
-    {
-      'image': 'assets/png/1.png',
-      'title': "Relaxing Sleep",
-      'desc': '45 MIN • SLEEP MUSIC',
-    },
-    {
-      'image': 'assets/png/2.png',
-      'title': "refreshing night",
-      'desc': '45 MIN • SLEEP MUSIC',
-    },
+  final List<SleepCard> sleepMusics = [
+    SleepCard(
+      image: "assets/png/1.png",
+      title: "Night Island",
+      description: "45 MIN • SLEEP MUSIC",
+    ),
+
+    SleepCard(
+      image: "assets/png/2.png",
+      title: "Reduce Stress",
+      description: "45 MIN • SLEEP MUSIC",
+    ),
+
+    SleepCard(
+      image: "assets/png/3.png",
+      title: "Calm Night",
+      description: "45 MIN • SLEEP MUSIC",
+    ),
+    SleepCard(
+      image: "assets/png/1.png",
+      title: "Night Island",
+      description: "45 MIN • SLEEP MUSIC",
+    ),
+
+    SleepCard(
+      image: "assets/png/2.png",
+      title: "Reduce Stress",
+      description: "45 MIN • SLEEP MUSIC",
+    ),
+
+    SleepCard(
+      image: "assets/png/3.png",
+      title: "Calm Night",
+      description: "45 MIN • SLEEP MUSIC",
+    ),
   ];
 
   @override
@@ -50,7 +62,7 @@ class _DetailsState extends State<Details> {
           Positioned(
             top: 0,
             child: Image.asset(
-              "assets/png/1.png",
+              widget.sleepCard.image,
               width: MediaQuery.of(context).size.width,
               height: 300,
               fit: BoxFit.cover,
@@ -65,13 +77,21 @@ class _DetailsState extends State<Details> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: CustomColors.textColor,
-                  child: SvgPicture.asset(
-                    "assets/svg/icons/BackButton.svg",
-                    color: CustomColors.background,
-                    width: 26,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Sleepstories()),
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: CustomColors.textColor,
+                    child: SvgPicture.asset(
+                      "assets/svg/icons/BackButton.svg",
+                      color: CustomColors.background,
+                      width: 26,
+                    ),
                   ),
                 ),
                 Row(
@@ -111,7 +131,7 @@ class _DetailsState extends State<Details> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Night Island",
+                      widget.sleepCard.title,
                       style: TextStyle(
                         color: CustomColors.textColor,
                         fontWeight: FontWeight.w700,
@@ -120,7 +140,7 @@ class _DetailsState extends State<Details> {
                     ),
                     SizedBox(height: 14),
                     Text(
-                      "45 MIN · SLEEP MUSIC",
+                      widget.sleepCard.description,
                       style: TextStyle(
                         color: CustomColors.textColor.withOpacity(0.8),
                         fontWeight: FontWeight.w400,
@@ -194,8 +214,9 @@ class _DetailsState extends State<Details> {
                       ),
                     ),
                     SizedBox(height: 8),
+
                     Padding(
-                      padding: const EdgeInsets.all(2),
+                      padding: const EdgeInsets.all(16.0),
                       child: GridView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -209,47 +230,59 @@ class _DetailsState extends State<Details> {
                             ),
                         itemBuilder: (context, index) {
                           final item = sleepMusics[index];
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  flex: 3,
-                                  child: Image.asset(
-                                    item['image'],
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                  ),
+
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      Details(sleepCard: item),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  child: Text(
-                                    item['title'],
-                                    style: const TextStyle(
-                                      color: CustomColors.textColor,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                              );
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 3,
+                                    child: Image.asset(
+                                      item.image,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                  ),
-                                  child: Text(
-                                    item['desc'],
-                                    style: const TextStyle(
-                                      color: CustomColors.textColor,
-                                      fontSize: 12,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    child: Text(
+                                      item.title,
+                                      style: const TextStyle(
+                                        color: CustomColors.textColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                    ),
+                                    child: Text(
+                                      item.description,
+                                      style: const TextStyle(
+                                        color: CustomColors.textColor,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                ],
+                              ),
                             ),
                           );
                         },

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sleep_app/screens/details.dart';
+import 'package:sleep_app/screens/welcome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // applay San-Fransisco to the whole prject
       theme: ThemeData(fontFamily: 'SF'),
-      home: Details(),
+      home: Welcome(),
     );
   }
 }
