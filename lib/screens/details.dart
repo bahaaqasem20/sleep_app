@@ -79,7 +79,7 @@ class _DetailsState extends State<Details> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => Sleepstories()),
                     );
